@@ -1,0 +1,44 @@
+<div class="container">
+    <h2>Project Report</h2>
+    <form class="form-horizontal" role="form" autocomplete="off">
+        <div class="form-group">
+            <label class="control-label col-sm-2">Release Date:</label>
+            <div class="col-sm-3">
+                <p class="input-group">
+                    <input type="text" class="form-control" uib-datepicker-popup="{{report.releaseDateFormat}}"
+                           ng-model="report.project.releaseDate"
+                           is-open="report.reportDatePicker.opened"
+                           close-text="Close"/>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="report.reportDatePickerOpen()"><i
+                                class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="projectCode">Project Name / PR Code:</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" id="projectCode" ng-model="report.project.projectName"
+                       placeholder="Enter Project Name/ PR Code">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="storyPoints">Story Points:</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" id="storyPoints" ng-model="report.project.storyPoints"
+                       placeholder="Enter Story Points">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="team">Team:</label>
+            <div class="col-sm-3">
+                <select class="form-control" name="repeatSelect" id="team"
+                        ng-model="report.project.teamName"
+                        ng-options="value._id as value.team for value in report.teamsList">
+                    <option value="">-- Select Team --</option>
+                </select>
+            </div>
+        </div>
+    </form>
+</div>

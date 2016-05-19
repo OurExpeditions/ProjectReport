@@ -1,0 +1,48 @@
+<!doctype html>
+
+<!-- ASSIGN OUR ANGULAR MODULE -->
+<html ng-app="defect-tracking-app">
+    <head>
+        <!-- META -->
+        <meta charset="utf-8">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="styles/style.css">
+        <script type="text/javascript" src="lib/jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="lib/moment/min/moment.min.js"></script>
+        <script type="text/javascript" src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css">
+        <link rel="stylesheet" href="lib/angular-ui-grid/ui-grid.min.css">
+        <title> defect tracking </title>
+    </head>
+    <!-- SET THE CONTROLLER -->
+    <body>
+        <nav class="navbar navbar-inverse" role="navigation">
+            <ul class="nav navbar-nav">
+                <li><a ui-sref="report">Project Report</a></li>
+                <li><a ui-sref="summary">Defect Summary</a></li>
+            </ul>
+        </nav>
+
+        <div class="container">
+            <div ui-view></div>
+        </div>
+        <!-- SPELLS -->
+        <script src="lib/angular/angular.js"></script>
+        <script src="lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+        <script src="lib/angular-ui-router/release/angular-ui-router.js"></script>
+
+        <!--angular UI-bootstrap-->
+        <script src="lib/angular-bootstrap/ui-bootstrap.js"></script>
+        <!-- for UI-Grid -->
+        <script src="lib/angular-ui-grid/ui-grid.min.js"></script>
+        <!-- for SheetJS it will support .xl, .xlsx,.ods-->
+        <script src="js/js-xls/xlsx.full.min.js"></script>
+        <script src="js/js-xls/ods.js"></script>
+        <script src="js/core.js"></script> <!-- load our main application -->
+        <script src="js/service/defect-service.js"></script>
+        <script src="views/project/project-report.js"></script>
+        <script src="views/defect/summary.js"></script>
+        <script src="js/util/ng_only_number.js"></script>
+    </body>
+</html>

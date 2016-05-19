@@ -1,0 +1,204 @@
+<div class="container">
+    <h2>Defect Summary</h2>
+    <form class="form-horizontal" role="form" autocomplete="off">
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="application">Application:</label>
+            <div class="col-sm-3">
+                <select class="form-control" name="repeatSelect" id="application"
+                        ng-model="summary.defect.appName" ng-change="summary.appChanged()"
+                        ng-options="value.id as value.appName for value in summary.applicationList">
+                    <option value="">-- Select Application --</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="team">Team:</label>
+            <div class="col-sm-3">
+                <select class="form-control" name="repeatSelect" id="team"
+                        ng-model="summary.defect.teamName"
+                        ng-options="value._id as value.team for value in summary.teamsList">
+                    <option value="">-- Select Team --</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="defect">Defect ID:</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" id="defect" placeholder="Enter Defect ID"
+                       ng-model="summary.defect.defectId" ng-only-number data-max-length="6">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="projectCode">Project Name / PR Code:</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" id="projectCode" ng-model="summary.defect.projectName"
+                       placeholder="Enter Project Name/ PR Code">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="severity">Severity:</label>
+            <div class="col-sm-3">
+                <select class="form-control" name="repeatSelect" id="severity"
+                        ng-model="summary.defect.severity"
+                        ng-options="value._id as value.type for value in summary.severityList">
+                    <option value="">-- Select Severity --</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="injectedStage">Injected Stage:</label>
+            <div class="col-sm-3">
+                <select class="form-control" name="repeatSelect" id="injectedStage"
+                        ng-model="summary.defect.injectedStage"
+                        ng-options="value._id as value.type for value in summary.injectedAndIdentifiedStageList">
+                    <option value="">-- Select Injected Stage --</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="identifiedStage">Identified Stage:</label>
+            <div class="col-sm-3">
+                <select class="form-control" name="repeatSelect" id="identifiedStage"
+                        ng-model="summary.defect.identifiedStage"
+                        ng-options="value._id as value.type for value in summary.injectedAndIdentifiedStageList">
+                    <option value="">-- Select Identified Stage --</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="rootCause">Root Cause:</label>
+            <div class="col-sm-3">
+                <select class="form-control" name="repeatSelect" id="rootCause" ng-model="summary.defect.rootCause"
+                        ng-options="value._id as value.type for value in summary.rootCauseList">
+                    <option value="">-- Select Root Cause --</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="defect">Solution to fix:</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" id="solutionToFix" placeholder="Enter Solution to fix"
+                       ng-model="summary.defect.solutionToFix">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="comments">Comments:</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" id="comments" placeholder="Enter Comments"
+                       ng-model="summary.defect.comments">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="description">Issue Description:</label>
+            <div class="col-sm-3">
+                <textarea class="form-control" id="description" placeholder="Enter Issue Description"
+                          ng-model="summary.defect.description"></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-danger" ng-click="summary.resetForm()">Reset</button>
+                <button type="submit" class="btn btn-default" ng-click="summary.submitForm()">Save</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="container" ng-show="!summary.gridOptions.data.length">
+        <div class="msg">
+            <div class="center">
+                <span class="muted">Select Spreadsheet File</span>
+                <br/>
+                <input type="file" accept=".xls,.xlsx,.ods" fileread=""
+                       opts="summary.gridOptions" multiple="false"/>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div id="grid1" ui-grid="summary.gridOptions" class="grid" ui-grid-selection>
+
+     </div>-->
+    <div class="table-responsive" ng-show="summary.gridOptions.data.length">
+        <table id="defectSpreadsheetTable" class="table table-hover table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>Application</th>
+                <th>Defect ID</th>
+                <th>Summary</th>
+                <th>Application Group</th>
+                <th>Assigned Developer</th>
+                <th>Assigned Tester</th>
+                <th>Assigned To</th>
+                <th>Clarity ID</th>
+                <th>Fixed By</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="defect in summary.gridOptions.data | orderBy: 'defectId'"
+                ng-click="summary.spreadSheetItemClicked(defect)">
+                <td>{{defect.Application}}</td>
+                <td>{{defect['Defect ID']}}</td>
+                <td>{{defect.Summary}}</td>
+                <td>{{defect['Application Group']}}</td>
+                <td>{{defect['Assigned Developer']}}</td>
+                <td>{{defect['Assigned Tester']}}</td>
+                <td>{{defect['Assigned To']}}</td>
+                <td>{{defect['Clarity ID']}}</td>
+                <td>{{defect['Fixed By']}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <br/>
+    <br/>
+    <button type="button" class="btn btn-default"
+            ng-show="summary.gridOptions.data.length" ng-click="summary.reset()">
+        Reset Grid
+    </button>
+    <div class="table-responsive" ng-show="summary.savedDefectList.length">
+        <br/>
+        <br/>
+        <h2>QV and QVXP Defects Summary</h2>
+        <br/>
+        <table id="defectTable" class="table table-hover table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>Defect Id</th>
+                <th>Project Name</th>
+                <th>Severity</th>
+                <th>Injected Stage</th>
+                <th>Identified Stage</th>
+                <th>Root Cause</th>
+                <th>Solution To Fix</th>
+                <th>Comments</th>
+                <th>Issue Description</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="defect in summary.savedDefectList | orderBy: 'defectId'">
+                <td>{{defect._id}}</td>
+                <td>{{defect.projectName}}</td>
+                <td>{{defect.severity}}</td>
+                <td>{{defect.injectedStage}}</td>
+                <td>{{defect.identifiedStage}}</td>
+                <td>{{defect.rootCause}}</td>
+                <td>{{defect.solutionToFix}}</td>
+                <td>{{defect.comments}}</td>
+                <td>{{defect.description}}</td>
+                <td>
+                    <div class="drop-btn">
+                        <button type="submit" class="btn btn-default" ng-click="summary.updateDefect(defect)">
+                            Update
+                        </button>
+                        <button type="submit" class="btn btn-danger" ng-click="summary.deleteDefect(defect._id)">
+                            Delete
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
