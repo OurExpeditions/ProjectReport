@@ -1,0 +1,107 @@
+<div class="modal-header">
+    <h3 class="modal-title">Add Defect</h3>
+</div>
+<div class="modal-body">
+    <h2>Defect Summary</h2>
+    <form class="form-horizontal" role="form" autocomplete="off">
+        <h4 class="error-message" ng-model="errorMessage" ng-show="popup.errorMessage.length"> {{popup.errorMessage}} </h4>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="application">Application :</label>
+            <div class="col-sm-4">
+                <select class="form-control" name="repeatSelect" id="application"
+                        ng-model="popup.defect.appName" ng-change="popup.appChanged()"
+                        ng-options="value.id as value.appName for value in popup.appList">
+                    <option value="">-- Select Application --</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="team">Team :</label>
+            <div class="col-sm-4">
+                <select class="form-control" name="repeatSelect" id="team"
+                        ng-model="popup.defect.teamName"
+                        ng-options="value._id as value.team for value in popup.teamsList">
+                    <option value="">-- Select Team --</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="defect">Defect ID :</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="defect" placeholder="Enter Defect ID"
+                       ng-model="popup.defect.defectId" ng-only-number data-max-length="6">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="projectCode">Project Name / PR Code :</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="projectCode" ng-model="popup.defect.projectName"
+                       placeholder="Enter Project Name/ PR Code">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="severity">Severity :</label>
+            <div class="col-sm-4">
+                <select class="form-control" name="repeatSelect" id="severity"
+                        ng-model="popup.defect.severity"
+                        ng-options="value._id as value.type for value in popup.severityList">
+                    <option value="">-- Select Severity --</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="injectedStage">Injected Stage :</label>
+            <div class="col-sm-4">
+                <select class="form-control" name="repeatSelect" id="injectedStage"
+                        ng-model="popup.defect.injectedStage"
+                        ng-options="value._id as value.type for value in popup.injectedAndIdentifiedStageList">
+                    <option value="">-- Select Injected Stage --</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="identifiedStage">Identified Stage :</label>
+            <div class="col-sm-4">
+                <select class="form-control" name="repeatSelect" id="identifiedStage"
+                        ng-model="popup.defect.identifiedStage"
+                        ng-options="value._id as value.type for value in popup.injectedAndIdentifiedStageList">
+                    <option value="">-- Select Identified Stage --</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="rootCause">Root Cause :</label>
+            <div class="col-sm-4">
+                <select class="form-control" name="repeatSelect" id="rootCause" ng-model="popup.defect.rootCause"
+                        ng-options="value._id as value.type for value in popup.rootCauseList">
+                    <option value="">-- Select Root Cause --</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="defect">Solution to fix:</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="solutionToFix" placeholder="Enter Solution to fix"
+                       ng-model="popup.defect.solutionToFix">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="comments">Comments :</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="comments" placeholder="Enter Comments"
+                       ng-model="popup.defect.comments">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="description">Issue Description :</label>
+            <div class="col-sm-4">
+                <textarea class="form-control" id="description" placeholder="Enter Issue Description"
+                          ng-model="popup.defect.description"></textarea>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="submit" class="btn btn-danger" ng-click="popup.cancelForm()">Cancel</button>
+    <button type="submit" class="btn btn-default" ng-click="popup.submitForm()">Save</button>
+</div>

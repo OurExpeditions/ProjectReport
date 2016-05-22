@@ -9,6 +9,7 @@
     "angular-ui-router": "*",
     "angular-bootstrap": "*",
     "angular-ui-grid": "*",
-    "js-xls": "*"
+    "js-xls": "*",
+    "angular-chart.js": "^0.10.2"
   }
 }

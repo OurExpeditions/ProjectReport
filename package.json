@@ -2,24 +2,23 @@
   "name": "project-report-application",
   "version": "0.0.1",
   "private": true,
-  "description": "Project  Report Appliaction.",
+  "description": "Project Report Appliaction.",
   "scripts": {
     "start": "node server/server.js"
   },
   "license": "MIT",
   "dependencies": {
-    "express": "*",
-    "morgan": "*",
-    "cookie-parser": "*",
-    "body-parser": "*",
-    "express-session": "*",
-    "debug": "*",
-    "passport": "*",
-    "passport-local": "*",
-    "mongoose": "*",
     "bcrypt-nodejs": "*",
+    "body-parser": "*",
     "connect-flash": "*",
+    "debug": "*",
+    "ejs": "*",
+    "express": "*",
+    "express-session": "*",
     "method-override": "*",
-    "ejs": "*"
+    "mongoose": "*",
+    "morgan": "*",
+    "passport": "*",
+    "passport-local": "*"
   }
 }

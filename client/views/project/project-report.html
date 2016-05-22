@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" ng-init="loadSavedDefects()">
     <h2>Project Report</h2>
     <form class="form-horizontal" role="form" autocomplete="off">
         <div class="form-group">
@@ -17,6 +17,15 @@
             </div>
         </div>
         <div class="form-group">
+            <label class="control-label col-sm-2" for="devMonth">Dev Month :</label>
+            <div class="col-sm-3">
+                <select class="form-control" id="devMonth" ng-model="report.project.devMonth"
+                        ng-options="month for month in months">
+                    <option value="" selected>Select Month</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
             <label class="control-label col-sm-2" for="projectCode">Project Name / PR Code:</label>
             <div class="col-sm-3">
                 <input type="text" class="form-control" id="projectCode" ng-model="report.project.projectName"
@@ -24,14 +33,14 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-2" for="storyPoints">Story Points:</label>
+            <label class="control-label col-sm-2" for="storyPoints">Story Points :</label>
             <div class="col-sm-3">
                 <input type="text" class="form-control" id="storyPoints" ng-model="report.project.storyPoints"
                        placeholder="Enter Story Points">
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-2" for="team">Team:</label>
+            <label class="control-label col-sm-2" for="team">Team :</label>
             <div class="col-sm-3">
                 <select class="form-control" name="repeatSelect" id="team"
                         ng-model="report.project.teamName"
@@ -40,5 +49,48 @@
                 </select>
             </div>
         </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="artifacts">Artifacts History :</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" id="artifacts" ng-model="report.project.artifacts"
+                       placeholder="Enter Artifacts History">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="risks">Risks & Mitigation's :</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" id="risks" ng-model="report.project.risks"
+                       placeholder="Enter Risks & Mitigation's">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="achievements">Achievements / Challenges :</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" id="achievements" ng-model="report.project.achievements"
+                       placeholder="Enter Achievements / Challenges ">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="valueAdds">Value Adds :</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" id="valueAdds" ng-model="report.project.valueAdds"
+                       placeholder="Enter Value Adds">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="retrospection">Retrospection Done? :</label>
+            <div class="col-sm-3">
+                <select class="form-control" name="repeatSelect" id="retrospection"
+                        ng-model="report.project.retrospectionDone"
+                        ng-options="resp.id as resp.value for resp in report.retrospectionList">
+                    <option value="">-- Select Retrospection Info --</option>
+                </select>
+            </div>
+        </div>
     </form>
+    <div>
+        <canvas id="bar" class="chart chart-bar"
+                chart-data="report.data" chart-labels="report.labels" chart-series="report.series">
+        </canvas>
+    </div>
 </div>

@@ -42,8 +42,14 @@ router.get('/defect/getRootCauses', function (req, res) {
 });
 
 router.get('/defect/teamsInfo', function (req, res) {
-    console.log('App Name Getting ASSSS   ',req.query['app']);
-    var query = defectInfo.Teams.find({appName: req.query['app']});
+    //console.log('App Name Getting ASSSS   ', req.query['app']);
+    var query;
+    if (req.query['app'] === undefined || req.query['app'] == null) {
+        query = defectInfo.Teams.find();
+    }
+    else {
+        query = defectInfo.Teams.find({appName: req.query['app']});
+    }
     query.exec(function (err, teams) {
         if (err) {
             res.send(err);
@@ -77,7 +83,7 @@ router.post('/defect/saveDefect', function (req, res) {
 });
 
 router.post('/defect/severity', function (req, res) {
-    console.log("Getting Asss...", req.body);
+    //console.log("Getting Asss...", req.body);
     defectInfo.Severity.create({
         _id: req.body.id,
         type: req.body.type
@@ -85,7 +91,7 @@ router.post('/defect/severity', function (req, res) {
         if (err) {
             res.send(err);
         }
-        console.log(" asfj asdf  ", severity);
+        //console.log(" asfj asdf  ", severity);
         res.send(severity);
     })
 });
@@ -113,11 +119,11 @@ router.post('/defect/addRootCause', function (req, res) {
         res.send(rootCause);
     })
 });
-router.post('/defect/addTeam', function(req, res){
+router.post('/defect/addTeam', function (req, res) {
     defectInfo.Teams.create({
         _id: req.body.id,
         appName: req.body.appName,
-        team:req.body.team
+        team: req.body.team
     }, function (err, team) {
         if (err) {
             res.send(err);
@@ -129,14 +135,14 @@ router.post('/defect/addTeam', function(req, res){
 // -------------- END POST METHODS -------------
 // -------------- Update Defect ----------------
 router.post('/defect/updateDefect', function (req, res) {
-    console.log(" asdlfjaks ", req.body);
+    //console.log(" Defect Update ASSSSS ", req.body);
     defectInfo.DefectSummary.findByIdAndUpdate({_id: req.body._id},
         req.body,
         function (err, defect) {
             if (err) {
                 res.send(err);
             }
-            console.log(' afkjfka Update Result     ', defect);
+            //console.log(' afkjfka Update Result     ', defect);
             res.send(defect);
         }
     )
@@ -155,6 +161,5 @@ router.delete('/defect/deleteDefect', function (req, res) {
 /*------------------------------------------------------------------------------------------------------*/
 // Populate database with sample data -- Only used once: the first time the application is started.
 // You'd typically not find this code in a real-life app, since the database would already exist.
-
 
 module.exports = router;
