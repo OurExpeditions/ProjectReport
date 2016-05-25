@@ -1,12 +1,17 @@
-<div class="container" ng-init="loadSavedDefects()">
+<div class="container main-header">
     <h2>Project Report</h2>
     <form class="form-horizontal" role="form" autocomplete="off">
+        <h4 class="error-message" ng-model="report.errorMessage" ng-show="report.errorMessage.length">
+            {{report.errorMessage}} </h4>
         <div class="form-group">
             <label class="control-label col-sm-2">Release Date:</label>
             <div class="col-sm-3">
                 <p class="input-group">
                     <input type="text" class="form-control" uib-datepicker-popup="{{report.releaseDateFormat}}"
                            ng-model="report.project.releaseDate"
+                           show-button-bar="false"
+                           show-weeks="'false'"
+                           datepicker-options="report.projectViewDateOptions"
                            is-open="report.reportDatePicker.opened"
                            close-text="Close"/>
                     <span class="input-group-btn">
@@ -42,8 +47,8 @@
         <div class="form-group">
             <label class="control-label col-sm-2" for="team">Team :</label>
             <div class="col-sm-3">
-                <select class="form-control" name="repeatSelect" id="team"
-                        ng-model="report.project.teamName"
+                <select class="form-control" name="repeatSelect" id="team" ng-disabled="report.teamSelectDesable"
+                        ng-model="report.teamName"
                         ng-options="value._id as value.team for value in report.teamsList">
                     <option value="">-- Select Team --</option>
                 </select>
@@ -82,15 +87,56 @@
             <div class="col-sm-3">
                 <select class="form-control" name="repeatSelect" id="retrospection"
                         ng-model="report.project.retrospectionDone"
-                        ng-options="resp.id as resp.value for resp in report.retrospectionList">
+                        ng-options="resp for resp in report.retrospectionList">
                     <option value="">-- Select Retrospection Info --</option>
                 </select>
             </div>
         </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-8">
+                <button class="btn btn-default" ng-click="report.addProjectDetails()">Add Project Details</button>
+                <button class="btn btn-danger" ng-click="report.refreshForm()">Cancel</button>
+            </div>
+        </div>
     </form>
-    <div>
+    <!--<div>
         <canvas id="bar" class="chart chart-bar"
                 chart-data="report.data" chart-labels="report.labels" chart-series="report.series">
         </canvas>
-    </div>
+    </div>-->
+</div>
+<div class="table-responsive" ng-show="report.savedProjects.length">
+    <table id="defectSpreadsheetTable" class="table table-hover table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Release Date</th>
+            <th>Project Name</th>
+            <th>Team</th>
+            <th>Artifacts</th>
+            <th>Risks</th>
+            <th>Achievements</th>
+            <th>ValueAdds</th>
+            <th>Retrospection Done</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="project in report.savedProjects | orderBy: 'releaseDate'"
+            ng-click="report.updateProjectDetails(defect)">
+            <td>
+                <div data-toggle="tooltip" data-original-title="{{project.devMonth}}" tooltip-loader>
+                    {{ report.dateFilter(project.releaseDate, report.releaseDateFormat) }}
+                </div>
+            <td>
+                <div data-toggle="tooltip" data-original-title="{{project.storyPoints}}" tooltip-loader>
+                    {{ project.projectName }}
+                </div>
+            <td>{{project.team}}</td>
+            <td>{{project.artifacts}}</td>
+            <td>{{project.risks}}</td>
+            <td>{{project.achievements}}</td>
+            <td>{{project.valueAdds}}</td>
+            <td>{{project.retrospectionDone ? "Yes" : "No"}}</td>
+        </tr>
+        </tbody>
+    </table>
 </div>

@@ -1,0 +1,24 @@
+<div class="login-margin">
+    <form class="form-horizontal" role="form" autocomplete="off">
+        <div class="form-group">
+            <label for="username" class="col-sm-2 control-label">Email</label>
+            <input type="text" id="username" name="email" value="" placeholder="Email"
+                   class="login username-field" ng-model="login.username" validator="required,email"
+                   required-error-message="Email is required" email-error-message="Invalid email address"
+                   valid-method="watch"/>
+        </div>
+        <div class="form-group">
+            <label for="password" class="col-sm-2 control-label">Password</label>
+            <input type="password" id="password" name="password" value="" placeholder="Password"
+                   class="login password-field" ng-model="login.password" validator="required"
+                   required-error-message="Password is required" valid-method="watch"/>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-default" validation-submit="loginForm" ng-click="doLogin()">Sign
+                    in
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

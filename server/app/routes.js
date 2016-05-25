@@ -57,6 +57,14 @@ router.get('/defect/teamsInfo', function (req, res) {
         res.send(teams);
     });
 });
+router.get('/defect/getProjectDetails', function (req, res) {
+    defectInfo.ProjectDetails.find(function (err, projects) {
+        if (err) {
+            res.send(err);
+        }
+        res.send(projects);
+    })
+});
 // -------------- END GET METHODS -------------
 // -------------- START POST METHODS ----------
 router.post('/defect/saveDefect', function (req, res) {
@@ -131,7 +139,26 @@ router.post('/defect/addTeam', function (req, res) {
         res.send(team);
     })
 });
-
+router.post('/defect/addProjectDetails', function (req, res) {
+    console.log(" getting body As    ", req.body);
+    defectInfo.ProjectDetails.create({
+        team: req.body.teamName,
+        releaseDate: req.body.releaseDate,
+        devMonth: req.body.devMonth,
+        projectName: req.body.projectName,
+        storyPoints: req.body.storyPoints,
+        artifacts: req.body.artifacts,
+        risks: req.body.risks,
+        achievements: req.body.achievements,
+        valueAdds: req.body.valueAdds,
+        retrospectionDone: req.body.retrospectionDone === "Yes"
+    }, function (err, project) {
+        if (err) {
+            res.send(err);
+        }
+        res.send(project);
+    });
+});
 // -------------- END POST METHODS -------------
 // -------------- Update Defect ----------------
 router.post('/defect/updateDefect', function (req, res) {
@@ -147,6 +174,18 @@ router.post('/defect/updateDefect', function (req, res) {
         }
     )
 });
+router.post('/defect/updateProject', function (req, res) {
+    defectInfo.ProjectDetails.findAndModify({_id: req.body._id},
+        req.body,
+        function (err, project) {
+            if (err) {
+                res.send(err);
+            }
+            res.send(project);
+        }
+    )
+});
+
 // -------------- End of Update ---------------------
 // -------------- Delete Defect ---------------------
 router.delete('/defect/deleteDefect', function (req, res) {
@@ -156,6 +195,16 @@ router.delete('/defect/deleteDefect', function (req, res) {
             res.send(err);
         }
         res.send(defect);
+    })
+});
+
+router.delete('/defect/deleteProject', function (req, res) {
+    var query = defectInfo.ProjectDetails.findByIdAndRemove({_id: req.query['prId']});
+    query.exec(function (err, project) {
+        if (err) {
+            res.send(err);
+        }
+        res.send(project);
     })
 });
 /*------------------------------------------------------------------------------------------------------*/

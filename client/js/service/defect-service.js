@@ -38,6 +38,18 @@ defectService.factory('DefectService', ['$http',
             },
             addTeam: function(team){
                 return $http.post('/defect/addTeam', team);
+            },
+            addProjectInfo:function(project){
+                return $http.post('/defect/addProjectDetails', project);
+            },
+            getProjects: function(){
+                return $http.get('/defect/getProjectDetails');
+            },
+            updateProjectInfo: function(project){
+                return $http.post('/defect/updateProject', project)
+            },
+            deleteProject: function (projectId) {
+                return $http.delete('/defect/deleteProject', {params: {prId: projectId}})
             }
         };
     }

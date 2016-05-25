@@ -1,6 +1,18 @@
-defectModeule = angular.module('defect.summary', ['ui.grid.selection']);
-//http://plnkr.co/edit/cq7s9lKn90xTVgNxIC6b?p=preview
-var errorMessageString = '';
+var defectModule = angular.module('defect.summary', []);
+
+defectModule.config(['$urlRouterProvider', '$stateProvider',
+    function ($urlRouterProvider, $stateProvider) {
+        $stateProvider.state('summary', {
+            url: '/summary',
+            templateUrl: 'views/defect/summary.html',
+            controller: projectSummaryController,
+            controllerAs: 'summary',
+            data: {
+                auth: true
+            }
+        });
+    }
+]);
 projectSummaryController = ['$rootScope', '$scope', 'DefectService', '$uibModal',
     function ($rootScope, $scope, DefectService, $uibModal) {
         var summary = this;

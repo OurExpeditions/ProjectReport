@@ -73,3 +73,10 @@ input[type=number]::-webkit-outer-spin-button {
 .error-message{
     color: #ff0000;
 }
+.login-margin{
+    margin-top: 100px;
+}
+
+.main-header{
+    margin-top: 50px;
+}

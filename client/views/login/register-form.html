@@ -1,0 +1,90 @@
+<div class="account-container register">
+    <div class="content clearfix">
+        <h2 ng-show="errorMessage.length">{{errorMessage}}</h2>
+        <form novalidate name="signupForm" class="form-horizontal" role="form" autocomplete="off">
+            <h1>Signup new account</h1>
+            <div class="login-fields">
+                <div class="form-group">
+                    <label for="email">User Name:</label>
+                    <input type="text" name="email" id="email" value="" placeholder="Enter Username" class="login"
+                           ng-model="signup.username" validator="required,email"
+                           required-error-message="Email is required"
+                           email-error-message="Invalid email address" valid-method="watch"/>
+                </div> <!-- /field -->
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" value="" placeholder="Password" class="login"
+                           ng-model="signup.password" validator="required" required-error-message="Password is required"
+                           valid-method="watch"/>
+                </div> <!-- /field -->
+
+                <div class="form-group">
+                    <label for="confirm_password">Confirm Password:</label>
+                    <input type="password" id="confirm_password" name="confirm_password" value=""
+                           placeholder="Confirm Password" class="login" compare-to="signup.password"
+                           ng-model="password_c"/>
+                </div> <!-- /field -->
+                <div class="form-group">
+                    <label for="phoneNumber">Phone Number:</label>
+                    <input type="text" id="phoneNumber" name="phoneNumber" ng-model="signup.phoneNumber"
+                           value="" validator="required,Phone Number" required-error-message="Phone Number is required"
+                           phoneNumber-error-message="Invalid Phone Number" valid-method="watch"
+                           placeholder="Phone Number" class="login" data-max-length="10" ng-only-number/>
+                </div> <!-- /field -->
+                <div class="form-group">
+                    <label for="roles">Enter Role:</label>
+                    <div class="dropdown">
+                        <button id="roles" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="true">
+                            {{selectedRole}}
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="roles">
+                            <li ng-repeat="a in validRoles"><a ng-click="rolesDropdownSelected(a)">{{a}}</a></li>
+                        </ul>
+                    </div> <!-- /login-fields -->
+                </div>
+                <div class="form-group" ng-show="showAppAndTeamDropdowns">
+                    <label class="control-label col-sm-2" for="application">Application :</label>
+                    <div class="col-sm-4">
+                        <select class="form-control" name="repeatSelect" id="application"
+                                ng-model="appName" ng-change="appChanged()"
+                                ng-options="value.id as value.appName for value in appList">
+                            <option value="">-- Select Application --</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group" ng-show="showAppAndTeamDropdowns">
+                    <label class="control-label col-sm-2" for="team">Team :</label>
+                    <div class="col-sm-4">
+                        <select class="form-control" name="repeatSelect" id="team"
+                                ng-model="teamName"
+                                ng-options="value._id as value.team for value in teamsList">
+                            <option value="">-- Select Team --</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <span class="login-checkbox">
+                        <input id="Field" name="Field" type="checkbox" class="field login-checkbox" value="First Choice"
+                               tabindex="4"/>
+                        <label class="choice" for="Field">Agree with the Terms & Conditions.</label>
+                    </span>
+
+                    <button class="button btn btn-primary btn-large" validation-submit="signupForm"
+                            ng-click="doRegister(signupForm.$valid)">
+                        Register
+                    </button>
+                </div> <!-- .actions -->
+            </div>
+        </form>
+
+    </div> <!-- /content -->
+
+</div> <!-- /account-container -->
+
+
+<!-- Text Under Box -->
+<div class="login-extra">
+    Already have an account? <a data-ui-sref="login">Login to your account</a>
+</div> <!-- /login-extra -->

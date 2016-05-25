@@ -34,6 +34,19 @@ var DefectSummarySchema = new Schema({
     updatedBy: String
 });
 
+var ProjectDetailsSchema = new Schema({
+    team: String,
+    releaseDate: Date,
+    devMonth: String,
+    projectName: String,
+    storyPoints: String,
+    artifacts: String,
+    risks: String,
+    achievements: String,
+    valueAdds: String,
+    retrospectionDone: Boolean
+});
+
 var TeamSchema = new Schema({
     _id: Number,
     team: String,
@@ -45,10 +58,12 @@ var injectedStageModel = mongoose.model('InjectedStage', InjectedStageSchema);
 var rootCauseModel = mongoose.model('RootCause', RootCauseSchema);
 var defectSummaryModel = mongoose.model('DefectSummary', DefectSummarySchema);
 var teamModel = mongoose.model('Teams', TeamSchema);
+var projectModel = mongoose.model('ProjectDetails', ProjectDetailsSchema);
 module.exports = {
     Severity: severityModel,
     InjectedStage: injectedStageModel,
     RootCause: rootCauseModel,
     DefectSummary: defectSummaryModel,
-    Teams: teamModel
+    Teams: teamModel,
+    ProjectDetails: projectModel
 };

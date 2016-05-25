@@ -18,14 +18,12 @@
     </head>
     <!-- SET THE CONTROLLER -->
     <body>
-        <nav class="navbar navbar-inverse" role="navigation">
-            <ul class="nav navbar-nav">
-                <li><a ui-sref="report">Project Report</a></li>
-                <li><a ui-sref="summary">Defect Summary</a></li>
-            </ul>
-        </nav>
+        <div ng-include="'views/common/loginHeader.html'" ng-show="!userInfo"></div> <!-- loginHeader -->
+        <div ng-include="'views/common/userHeader.html'" ng-show="userInfo"></div> <!-- userHeader -->
 
-        <div ui-view></div>
+        <div class="container">
+            <div ui-view></div>
+        </div>
 
         <!-- SPELLS -->
         <script src="lib/angular/angular.js"></script>
@@ -42,10 +40,13 @@
         <script src="js/js-xls/xlsx.full.min.js"></script>
         <script src="js/js-xls/ods.js"></script>
         <script src="js/core.js"></script> <!-- load our main application -->
+        <script src="js/service/auth-service.js"></script>
         <script src="js/service/defect-service.js"></script>
         <script src="views/project/project-report.js"></script>
         <script src="views/defect/summary.js"></script>
         <script src="js/util/ng_only_number.js"></script>
         <script src="views/defect/popup-controller.js"></script>
+        <script src="views/login/users.js"></script>
+        <script src="views/login/userController.js"></script>
     </body>
 </html>

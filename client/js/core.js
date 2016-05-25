@@ -1,40 +1,20 @@
 var defectTracking = angular.module('defect-tracking-app',
-    ['ui.grid', 'defect-service', 'report',
-        'ui.router', 'ui.bootstrap', 'ui.bootstrap.tpls',
-        'defect.summary', 'ngOnlyNumberApp', 'chart.js']);
-
-/*defectTracking.controller('MainCtrl', ['$scope','DefectService', function ($scope, DefectService) {
-
- }]);*/
+    ['ui.grid', 'defect-service', 'ui.router','chart.js',
+        'ui.bootstrap', 'ui.bootstrap.tpls', 'ngOnlyNumberApp',
+        'defect.summary', 'project.report', 'authService', 'users'
+    ]);
 
 defectTracking.config(['$urlRouterProvider', '$stateProvider',
     function ($urlRouterProvider, $stateProvider) {
-        $stateProvider.state('report', {
-            url: '/report',
-            templateUrl: 'views/project/project-report.html',
-            controller: reportController,
-            controllerAs: 'report',
-            data: {
-                auth: false
-            }
-        });
-        $stateProvider.state('summary', {
-            url: '/summary',
-            templateUrl: 'views/defect/defect-summary.html',
-            controller: projectSummaryController,
-            controllerAs: 'summary',
-            data: {
-                auth: false
-            }
-        });
-        $urlRouterProvider.otherwise("/report");
+
+        //session check and redirect to specific state
+        if (!window.sessionStorage["userInfo"]) {
+            $urlRouterProvider.otherwise("/login");
+        } else {
+            $urlRouterProvider.otherwise("/report");
+        }
     }
 ]);
-
-/*defectTracking.config(function ($urlRouterProvider, $httpProvider) {
- //session check and redirect to specific state
-
- });*/
 
 defectTracking.directive("fileread", [function () {
     return {
@@ -68,6 +48,25 @@ defectTracking.directive("fileread", [function () {
 
 defectTracking.run(['$rootScope', '$state', 'DefectService',
     function ($rootScope, $state, DefectService) {
+        $rootScope.$state = $state; //Get state info in view
+        if (window.sessionStorage["userInfo"]) {
+            $rootScope.userInfo = window.sessionStorage["userInfo"];
+            $rootScope.user = JSON.parse(window.sessionStorage["userInfo"]);
+        }
+
+        //Check session and redirect to specific page
+        $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+            if (toState && toState.data && toState.data.auth && !window.sessionStorage["userInfo"]) {
+                event.preventDefault();
+                window.location.href = "#login";
+            }
+
+            if (!toState && !toState.data && !toState.data.auth && window.sessionStorage["userInfo"]) {
+                event.preventDefault();
+                window.location.href = "#report";
+            }
+        });
+        $rootScope.appList = [{id: 1, appName: 'QuikView'}, {id: 2, appName: 'QVXP'}];
         $rootScope.months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
         $rootScope.severityList = [];
         $rootScope.teamsList = [];

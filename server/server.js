@@ -58,6 +58,21 @@ app.use('/', routes);
 app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname, '../client', 'index.html'));
 });
+// Configuring Passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Using the flash middleware provided by connect-flash to store messages in session
+// and displaying in templates
+var flash = require('connect-flash');
+app.use(flash());
+
+// Initialize Passport
+var initPassport = require('./passport/init');
+initPassport(passport);
+
+var userRoutes = require('./app/index')(passport);
+app.use('/defect/', userRoutes);
 
 // error handlers
 app.use(function (req, res, next) {
